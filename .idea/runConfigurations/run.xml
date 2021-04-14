@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="sk.fri.uniza.HouseHoldServiceApplication" />
+    <module name="HouseHoldService" />
+    <option name="PROGRAM_PARAMETERS" value="server config.yml" />
+    <option name="WORKING_DIRECTORY" value="$ProjectFileDir$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

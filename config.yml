@@ -1,0 +1,8 @@
+swagger: # nastavenie balíka Swagger, ktorý generuje dokumentáciu k vytvorenému REST rozhraniu
+  resourcePackage: sk.fri.uniza.resources
+
+# Nastavenie logovania Dropwizzard frameworku
+logging:
+  level: INFO
+  loggers:
+    sk.fri.uniza: DEBUG

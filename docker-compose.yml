@@ -1,0 +1,24 @@
+# Use root/example as user/password credentials
+# Run with command sudo docker-compose -f mariadb.yml up
+version: '3.8'
+
+services:
+
+  db:
+    image: mariadb:latest
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    #    restart: always # Automatic start on boot
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=HouseHoldDB
+      - MYSQL_USER=householduser
+      - MYSQL_PASSWORD=userpassword
+
+    ports:
+      - 3306:3306
+
+  adminer:
+    image: adminer:latest
+    #    restart: always #Automatic start on boot
+    ports:
+      - 8888:8080
