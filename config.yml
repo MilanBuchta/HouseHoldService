@@ -6,3 +6,51 @@ logging:
   level: INFO
   loggers:
     sk.fri.uniza: DEBUG
+
+# Nastavenie databázy
+database:
+  # názov JDBC ovládača
+  driverClass: org.mariadb.jdbc.Driver
+
+  # username
+  user: householduser
+
+  # password
+  password: userpassword
+
+  # JDBC URL adresa, kde sa nachádza databáza
+  # Databáza je spustená cez docker lokálne na porte 3306
+  url: jdbc:mariadb://localhost:3306/HouseHoldDB
+
+  # Akékoľvek vlastnosti špecifické pre ovládač JDBC:
+  # https://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/Hibernate_User_Guide.html#configurations
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect # SQL dialekt, ktorému rozumie databáza
+    hibernate.show_sql: true # Do konzoly zapíšte všetky príkazy SQL.
+    hibernate.format_sql: true # Pretty-print the SQL in the log and console.
+    hibernate.use_sql_comments: true # Ak je pravda, "Hibernácia" generuje komentáre vo vnútri SQL, aby sa uľahčilo ladenie.
+    hibernate.hbm2ddl.auto: create  # Automatické generovanie schémy (Používa sa pri vývoji, nie v produkčnej verzii)
+    #Možnosti hbm2ddl.auto
+    # validate: skontroluje schému, nevykonáva žiadne zmeny v databáze.
+    # update: aktualizácia schémy.
+    # create: vytvorí schému a zničí predchádzajúce údaje.
+    # create-only: Vytvorí sa databáza.
+    # create-drop: zruší schému, keď je SessionFactory explicitne zatvorený, zvyčajne pri zastavení aplikácie.
+    # none: so schémou nič nerobí, v databáze sa nevykonajú žiadne zmeny
+
+  # Ostatné nastavenia, ktoré sú štandardne nastavené
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false

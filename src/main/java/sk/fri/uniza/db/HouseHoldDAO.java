@@ -18,30 +18,34 @@ public class HouseHoldDAO extends AbstractDAO<HouseHold> {
     }
 
     public HouseHold create(HouseHold houseHold) {
-        return null;
+        currentSession().save(houseHold);
+        return houseHold;
     }
 
     public HouseHold update(HouseHold houseHold) {
-        return null;
+        return (HouseHold) currentSession().merge(houseHold);
     }
 
     public List<HouseHold> findByZip(String zip) {
-        return null;
+        return list(namedQuery("HouseHold_findByZip")
+                .setParameter("zipNo", zip));
     }
 
     public List<HouseHold> findByFirstName(String firstname) {
-        return null;
+        return list(namedQuery("HouseHold_findByFirstName")
+                .setParameter("name", firstname));
     }
 
     public List<HouseHold> findByLastName(String lastname) {
-        return null;
+        return list(namedQuery("HouseHold_findByLastName")
+                .setParameter("name", lastname));
     }
 
     public HouseHold findById(Long ID) {
-        return null;
+        return get(ID);
     }
 
     public List<HouseHold> findAll() {
-        return null;
+        return list(namedQuery("HouseHold_findAll"));
     }
 }

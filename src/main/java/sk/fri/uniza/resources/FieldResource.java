@@ -11,6 +11,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Api("/field")
+@Path("/field")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class FieldResource {
 
     private FieldDAO fieldDAO;
@@ -19,27 +23,44 @@ public class FieldResource {
         this.fieldDAO = fieldDAO;
     }
 
-    public Field createField(Field field) {
-        return null;
+    @POST
+    @UnitOfWork //Otvorí novú hibernate session
+    @ApiOperation(value = "Prídá nový typ Field")
+    public Field createField(@Valid Field field) {
+        return fieldDAO.create(field);
     }
 
 
-    public Field updateField(Field field) {
-        return null;
+    @PUT
+    @UnitOfWork //Otvorí novú hibernate session
+    @ApiOperation(value = "Upraví existujúci Field")
+    public Field updateField(@Valid Field field) {
+        return fieldDAO.update(field);
     }
 
 
-    public Field findField(String id) {
-        return null;
+    @GET
+    @UnitOfWork //Otvorí novú hibernate session
+    @Path("{id}")
+    @ApiOperation(value = "Zobrazí typ Field")
+    public Field findField(@PathParam("id") String id) {
+        return fieldDAO.findById(id);
     }
 
 
-    public Field deleteField(String id) {
-        return null;
+    @DELETE
+    @UnitOfWork //Otvorí novú hibernate session
+    @Path("{id}")
+    @ApiOperation(value = "Vymaze Field")
+    public Field deleteField(@PathParam("id") String id) {
+        return fieldDAO.delete(id);
     }
 
 
+    @GET
+    @UnitOfWork //Otvorí novú hibernate session
+    @ApiOperation(value = "Zobrazí všetky typy Field")
     public List<Field> allFields() {
-        return null;
+        return fieldDAO.allFields();
     }
 }
