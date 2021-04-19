@@ -20,6 +20,7 @@ import sk.fri.uniza.resources.HouseHoldResource;
 import sk.fri.uniza.resources.IoTNodeResource;
 import sk.fri.uniza.health.DeleteHealthCheck;
 
+
 public class HouseHoldServiceApplication
         extends Application<HouseHoldServiceConfiguration> {
 
@@ -84,6 +85,11 @@ public class HouseHoldServiceApplication
                 new DataDAO(hibernate.getSessionFactory());
         final FieldDAO fieldDAO =
                 new FieldDAO(hibernate.getSessionFactory());
+
+
+        final IotNodeDAO iotNodeDOA =
+                new IotNodeDAO(hibernate.getSessionFactory());
+
         // Vytvorené objekty reprezentujúce REST rozhranie
         environment.jersey()
                 .register(new HouseHoldResource(houseHoldDAO, dataDAO));
@@ -91,7 +97,8 @@ public class HouseHoldServiceApplication
                 .register(new FieldResource(fieldDAO));
         environment.jersey()
                 .register(new DateParameterConverterProvider());
-
+        environment.jersey()
+                .register(new IoTNodeResource(iotNodeDOA));
 
         // Vytvorenie Healthcheck (overenie zdravia aplikácie), ktorý
         // využijeme na otestovanie databázy
@@ -105,7 +112,7 @@ public class HouseHoldServiceApplication
                                 new Class[]{HouseHoldDAO.class,
                                         IotNodeDAO.class, FieldDAO.class,
                                         DataDAO.class},
-                                new Object[]{houseHoldDAO, null,
+                                new Object[]{houseHoldDAO, iotNodeDOA,
                                         fieldDAO, dataDAO
                                 });
 
@@ -125,7 +132,7 @@ public class HouseHoldServiceApplication
 
         // Spustenie všetkých health kontrol
         environment.healthChecks().runHealthCheck("databaseHealthcheck");
-        environment.healthChecks().runHealthCheck("deleteHealthcheck");
+//        environment.healthChecks().runHealthCheck("deleteHealthcheck");
     }
 
 }

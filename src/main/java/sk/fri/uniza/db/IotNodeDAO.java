@@ -2,11 +2,15 @@ package sk.fri.uniza.db;
 
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
+import sk.fri.uniza.model.HouseHold;
 import sk.fri.uniza.model.IotNode;
 
+import javax.ws.rs.WebApplicationException;
 import java.util.List;
 
-public class IotNodeDAO extends AbstractDAO<IotNodeDAO> {
+
+
+public class IotNodeDAO extends AbstractDAO<IotNode> {
     /**
      * Creates a new DAO with a given session provider.
      *
@@ -16,27 +20,35 @@ public class IotNodeDAO extends AbstractDAO<IotNodeDAO> {
         super(sessionFactory);
     }
 
-    public IotNode create(IotNode iotNode) {
+    public IotNode create(Long houseHoldId,IotNode iotNode) throws
+            WebApplicationException {
+
+        HouseHold houseHold =
+                currentSession().get(HouseHold.class, houseHoldId);
+
+        if (houseHold == null) {
+            throw new WebApplicationException("HouseHoldD  doesnt exist ", 400);
+        }
+
+        iotNode.setHouseHold(houseHold);
         currentSession().save(iotNode);
         return iotNode;
     }
 
     public IotNode findById(Long id) {
-        //TODO Doplniť
-        return null;
+        return get(id);
     }
 
     public IotNode update(IotNode iotNode) {
-        //TODO Doplniť
-        return null;
+        return (IotNode) currentSession().merge(iotNode);
     }
 
     public List<IotNode> findByHouseHold(Long houseHoldId) {
-        //TODO Doplniť
-        return null;
+        return list(namedQuery("IoTNode_findByhouseHoldId")
+                .setParameter("houseHoldId", houseHoldId));
     }
 
     public List<IotNode> allIotNodes() {
-        return null;
+        return list(namedQuery("IoTNode_All"));
     }
 }

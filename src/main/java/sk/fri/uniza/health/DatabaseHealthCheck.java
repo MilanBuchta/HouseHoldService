@@ -79,9 +79,20 @@ public class DatabaseHealthCheck extends HealthCheck {
         dataString.setField(weather);
         dataString.setHouseHold(houseHold);
 
+
         dataDAO.create(dataDouble);
         dataDAO.create(dataInteger);
         dataDAO.create(dataString);
+
+
+        IotNode node = new IotNode();
+        node.setName("MeteoStanica");
+
+        IotNode node2 = new IotNode();
+        node2.setName("Senzor");
+
+        iotNodeDAO.create(houseHold.getId(),node);
+        iotNodeDAO.create(houseHold.getId(),node2);
 
         return Result.healthy();
     }

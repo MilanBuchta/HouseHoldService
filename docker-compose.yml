@@ -1,6 +1,6 @@
 # Use root/example as user/password credentials
 # Run with command sudo docker-compose -f mariadb.yml up
-version: '3.8'
+version: '3.3'
 
 services:
 
